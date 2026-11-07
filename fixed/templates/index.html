@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Boutique{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Bienvenue chez Brine</h1>
+  <p>Les meilleurs cornichons artisanaux du campus.</p>
+</section>
+
+<div class="grille">
+  {% for p in products %}
+  <article class="carte">
+    <div class="emoji">{{ p.emoji }}</div>
+    <h2>{{ p.name }}</h2>
+    <p class="desc">{{ p.desc }}</p>
+    <div class="bas">
+      <span class="prix">{{ "%.2f"|format(p.price) }} &euro;</span>
+      <form method="post" action="{{ url_for('add') }}">
+        <input type="hidden" name="product" value="{{ p.id }}">
+        <button type="submit">Ajouter au panier</button>
+      </form>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

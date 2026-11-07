@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Brine{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129362;</text></svg>">
+  <style>
+    :root {
+      --vert: #2c4a66;
+      --vert-fonce: #1a2e40;
+      --creme: #f6f2ea;
+      --ambre: #c1703d;
+      --encre: #242a2f;
+      --carte: #ffffff;
+      --bord: #e2d9c8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--creme);
+      color: var(--encre);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--vert);
+      color: #fdf9ef;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      box-shadow: 0 2px 8px rgba(29, 52, 33, 0.25);
+    }
+    .logo {
+      font-size: 1.35rem;
+      font-weight: bold;
+      color: #fdf9ef;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    nav { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+    nav a {
+      color: #e8f0e4;
+      text-decoration: none;
+      font-size: 0.98rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 8px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    nav a:hover { background: rgba(255, 255, 255, 0.14); color: #ffffff; }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    footer {
+      background: var(--vert-fonce);
+      color: #cfe0cf;
+      text-align: center;
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      margin-top: auto;
+      line-height: 1.6;
+    }
+    h1 { font-size: 1.9rem; margin-bottom: 0.4rem; }
+    .hero { text-align: center; margin-bottom: 2rem; }
+    .hero p { color: #5b6b5e; font-style: italic; }
+    .grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+      gap: 1.25rem;
+    }
+    .carte {
+      background: var(--carte);
+      border: 1px solid var(--bord);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: 0 2px 6px rgba(47, 82, 51, 0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .carte:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(47, 82, 51, 0.14); }
+    .carte .emoji { font-size: 2.2rem; }
+    .carte h2 { font-size: 1.12rem; }
+    .carte .desc { font-size: 0.88rem; color: #63705f; flex: 1; }
+    .carte .bas { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .prix { font-weight: bold; color: var(--vert-fonce); }
+    button, .btn {
+      background: var(--vert);
+      color: #ffffff;
+      border: 0;
+      padding: 0.6rem 1rem;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-family: inherit;
+      transition: background 0.15s ease;
+    }
+    button:hover { background: var(--vert-fonce); }
+    table { width: 100%; border-collapse: collapse; background: var(--carte); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 6px rgba(47,82,51,.08); }
+    th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #f0ead9; }
+    th { background: #eef3e9; color: var(--vert-fonce); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.4px; }
+    tr.mystere td { background: #fdf6e0; }
+    tr.mystere td:first-child::before { content: "? "; color: #b8860b; font-weight: bold; }
+    tfoot td { font-weight: bold; background: #f4f8f0; }
+    .erreur {
+      background: #fdecea;
+      color: #8c2f24;
+      border: 1px solid #f5c6c0;
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+    .note-mystere {
+      background: #fdf6e0;
+      border: 1px dashed #d9b23c;
+      color: #7c5c0e;
+      border-radius: 10px;
+      padding: 0.8rem 1.1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.92rem;
+      font-style: italic;
+    }
+    .vide { text-align: center; color: #6b7a6c; padding: 2.5rem 1rem; background: var(--carte); border-radius: 12px; border: 1px dashed var(--bord); }
+    .actions-panier { margin-top: 1.3rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .btn-secondaire { background: transparent; color: var(--vert); border: 1px solid var(--vert); text-decoration: none; display: inline-block; }
+    .btn-secondaire:hover { background: var(--vert); color: #fff; }
+    @media (max-width: 560px) {
+      h1 { font-size: 1.5rem; }
+      th, td { padding: 0.55rem 0.6rem; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="{{ url_for('home') }}">&#129362; Brine</a>
+    <nav>
+      <a href="{{ url_for('home') }}">Boutique</a>
+      <a href="{{ url_for('cart') }}">Panier {% if cart_count %}({{ cart_count }}){% endif %}</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>Brine &copy; 2025</p>
+  </footer>
+</body>
+</html>

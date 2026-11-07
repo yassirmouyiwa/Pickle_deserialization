@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Mon panier{% endblock %}
+{% block content %}
+<h1>Mon panier</h1>
+<p style="color:#5b6b5e; margin:0.4rem 0 1.4rem;">Recapitulatif de votre commande.</p>
+
+{% if error %}
+<div class="erreur">{{ error }}</div>
+{% endif %}
+
+{% if has_mystery %}
+<div class="note-mystere">
+  Un article mystere s'est glisse dans votre panier... Il ne figure pas au catalogue,
+  et pourtant le serveur l'affiche fidelement. Marrant, non ?
+</div>
+{% endif %}
+
+{% if items %}
+<table>
+  <thead>
+    <tr>
+      <th>Article</th>
+      <th>Prix unitaire</th>
+      <th>Qte</th>
+      <th>Sous-total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for it in items %}
+    <tr class="{{ 'mystere' if it.price is none else '' }}">
+      <td>{{ it.name }}</td>
+      <td>{% if it.price is not none %}{{ "%.2f"|format(it.price) }} &euro;{% else %}&mdash;{% endif %}</td>
+      <td>{% if it.qty is not none %}{{ it.qty }}{% else %}&mdash;{% endif %}</td>
+      <td>{% if it.price is not none %}{{ "%.2f"|format(it.price * it.qty) }} &euro;{% else %}&mdash;{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <td></td>
+      <td>{{ "%.2f"|format(total) }} &euro;</td>
+    </tr>
+  </tfoot>
+</table>
+{% elif not error %}
+<div class="vide">
+  <p>Votre panier est vide (et votre cookie aussi).</p>
+  <p style="margin-top:0.6rem;"><a class="btn btn-secondaire" href="{{ url_for('home') }}">Retour a la boutique</a></p>
+</div>
+{% endif %}
+
+<div class="actions-panier">
+  <a class="btn btn-secondaire" href="{{ url_for('home') }}">Continuer mes achats</a>
+  <a class="btn btn-secondaire" href="{{ url_for('reset') }}">Vider le panier</a>
+</div>
+{% endblock %}
